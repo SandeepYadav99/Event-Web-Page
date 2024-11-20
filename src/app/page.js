@@ -1,13 +1,16 @@
+
 import React from 'react'
 import EventList from '@/components/events/event-list';
-import {  getFeaturedEvents } from '../../dummy-data';
+import { getAllEvents } from '@/helper/api-utils';
 
-const HomePage = () => {
-  const eventList = getFeaturedEvents();
-
+// eslint-disable-next-line @next/next/no-async-client-component
+const HomePage = async() => {
+  
+ const events = await getAllEvents();
+ 
   return (
     <div>
-      <EventList items={eventList}/>
+      <EventList items={events}/>
     </div>
   )
 }

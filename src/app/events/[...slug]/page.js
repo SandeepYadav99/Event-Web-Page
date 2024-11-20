@@ -1,14 +1,12 @@
-"use client";
-import { useParams } from "next/navigation";
 import React, { Fragment } from "react";
-import { getFilteredEvents } from "../../../../dummy-data";
 import EventList from "@/components/events/event-list";
 import ResultsTitle from "@/components/events/results-title";
 import Button from "@/components/ui/button";
 import ErrorAlert from "@/components/ui/error-alert";
+import { getFilteredEvents } from "@/helper/api-utils";
 
-const EventFiltered = () => {
-  const { slug } = useParams();
+const EventFiltered = async ({ params }) => {
+  const slug = (await params).slug;
   if (!slug) {
     return <p className="center">Loading...</p>;
   }
@@ -37,8 +35,11 @@ const EventFiltered = () => {
     );
   }
 
-  const filteredEvents = getFilteredEvents({ year: numYear, month: numMonth });
-  console.log(filteredEvents, numYear, numMonth);
+  const filteredEvents = await getFilteredEvents({
+    year: numYear,
+    month: numMonth,
+  });
+  
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <Fragment>

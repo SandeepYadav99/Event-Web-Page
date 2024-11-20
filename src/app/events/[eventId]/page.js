@@ -1,16 +1,15 @@
-"use client";
-import EventSummary from "@/components/event-detail/event-summary";
 
+import EventSummary from "@/components/event-detail/event-summary";
 import React, { Fragment } from "react";
-import { getEventById } from "../../../../dummy-data";
-import { useParams } from "next/navigation";
+
 import EventLogistics from "@/components/event-detail/event-logistics";
 import EventContent from "@/components/event-detail/event-content";
 import ErrorAlert from "@/components/ui/error-alert";
+import { getEventById } from "@/helper/api-utils";
 
-const EventDetails = () => {
-  const { eventId } = useParams();
-  const event = getEventById(eventId);
+const EventDetails =async ({params}) => {
+  const slug = (await params).eventId;
+  const event =await getEventById(slug);
   if (!event) {
     return (
       <ErrorAlert>
