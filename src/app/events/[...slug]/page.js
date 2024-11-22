@@ -5,6 +5,14 @@ import Button from "@/components/ui/button";
 import ErrorAlert from "@/components/ui/error-alert";
 import { getFilteredEvents } from "@/helper/api-utils";
 
+export async function generateMetadata({ params }) {
+  const event = (await params).slug
+  return {
+    title: `Filtered Events`,
+    description:`All events for ${event[0]} ${event[1]}`
+  }
+}
+
 const EventFiltered = async ({ params }) => {
   const slug = (await params).slug;
   if (!slug) {

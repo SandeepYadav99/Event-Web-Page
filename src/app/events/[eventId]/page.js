@@ -1,15 +1,27 @@
-
 import EventSummary from "@/components/event-detail/event-summary";
 import React, { Fragment } from "react";
-
 import EventLogistics from "@/components/event-detail/event-logistics";
 import EventContent from "@/components/event-detail/event-content";
 import ErrorAlert from "@/components/ui/error-alert";
-import { getEventById } from "@/helper/api-utils";
+import { getAllEvents, getEventById } from "@/helper/api-utils";
+import Comments from "@/components/input/comments";
 
-const EventDetails =async ({params}) => {
-  const slug = (await params).eventId;
-  const event =await getEventById(slug);
+export async function generateStaticParams() {
+  const posts = await getAllEvents();
+  
+  return posts.map((post) => {
+    return {
+      id: post.id,
+
+    }}
+  )
+}
+
+
+const EventDetails = async ({ params  }) => {
+console.log(params.id,"Params")
+const slug = await params.eventId;
+  const event = await getEventById(slug);
   if (!event) {
     return (
       <ErrorAlert>
@@ -29,6 +41,7 @@ const EventDetails =async ({params}) => {
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
+      <Comments eventId={slug}/>
     </Fragment>
   );
 };

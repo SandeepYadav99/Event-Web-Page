@@ -1,25 +1,17 @@
-"use client";
-import React from 'react'
-import EventList from '@/components/events/event-list';
-import { getAllEvents } from '../../../dummy-data';
-import EventsSearch from '@/components/events/events-search';
-import { useRouter } from 'next/navigation';
+import React, { Fragment } from "react";
+import EventList from "@/components/events/event-list";
+import { getAllEvents } from "@/helper/api-utils";
+import EventSearchContainer from "@/components/events/event-search-container";
 
+const AllEventPage = async () => {
+  const eventList = await getAllEvents();
 
-const AllEventPage = () => {
-  const router = useRouter()
-  const eventList = getAllEvents();
-
-  const filteredPathHandler=(year, month)=>{
-    const filteredPath= `/events/${year}/${month}`;
-     router.push(filteredPath)
-  }
   return (
-    <div>
-      <EventsSearch onSearch={filteredPathHandler}/>
-      <EventList items={eventList}/>
-    </div>
-  )
-}
+    <Fragment>
+      <EventSearchContainer />
+      <EventList items={eventList} />
+    </Fragment>
+  );
+};
 
 export default AllEventPage;

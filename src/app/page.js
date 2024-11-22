@@ -1,18 +1,21 @@
+import React, { Fragment } from "react";
+import EventList from "@/components/events/event-list";
+import { getFeaturedEvents } from "@/helper/api-utils";
+import NewsletterRegistration from "@/components/input/newsletter-registration";
 
-import React from 'react'
-import EventList from '@/components/events/event-list';
-import { getAllEvents } from '@/helper/api-utils';
+export const metadata = {
+  title: "NextJS Events",
+  description: "Find a lot of great events that allow you to evolve...",
+};
 
-// eslint-disable-next-line @next/next/no-async-client-component
-const HomePage = async() => {
-  
- const events = await getAllEvents();
- 
+const HomePage = async () => {
+  const events = await getFeaturedEvents();
   return (
-    <div>
-      <EventList items={events}/>
-    </div>
-  )
-}
+    <Fragment>
+      <NewsletterRegistration/>
+      <EventList items={events} />
+    </Fragment>
+  );
+};
 
 export default HomePage;
