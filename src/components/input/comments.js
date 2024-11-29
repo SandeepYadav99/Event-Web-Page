@@ -19,7 +19,7 @@ function Comments(props) {
           setComments(data.comments);
         });
     }
-  }, [showComments]);
+  }, [eventId, showComments]);
 
   function toggleCommentsHandler() {
     setShowComments((prevStatus) => !prevStatus);

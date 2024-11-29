@@ -10,6 +10,7 @@ export const metadata = {
 
 const HomePage = async () => {
   const events = await getFeaturedEvents();
+ 
   return (
     <Fragment>
       <NewsletterRegistration/>

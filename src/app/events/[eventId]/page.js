@@ -5,23 +5,19 @@ import EventContent from "@/components/event-detail/event-content";
 import ErrorAlert from "@/components/ui/error-alert";
 import { getAllEvents, getEventById } from "@/helper/api-utils";
 import Comments from "@/components/input/comments";
-
+export const dynamic = 'force-static';
 export async function generateStaticParams() {
   const posts = await getAllEvents();
-  
-  return posts.map((post) => {
-    return {
-      id: post.id,
 
-    }}
-  )
+  return posts.map((post) => ({
+    params: { eventId: post.id.toString() }, 
+  }));
 }
 
 
 const EventDetails = async ({ params  }) => {
-console.log(params.id,"Params")
-const slug = await params.eventId;
-  const event = await getEventById(slug);
+const {eventId} = await params;
+  const event = await getEventById(eventId);
   if (!event) {
     return (
       <ErrorAlert>
@@ -41,7 +37,7 @@ const slug = await params.eventId;
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
-      <Comments eventId={slug}/>
+      <Comments eventId={eventId}/>
     </Fragment>
   );
 };
