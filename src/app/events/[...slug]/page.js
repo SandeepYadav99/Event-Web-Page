@@ -3,7 +3,10 @@ import EventList from "@/components/events/event-list";
 import ResultsTitle from "@/components/events/results-title";
 import Button from "@/components/ui/button";
 import ErrorAlert from "@/components/ui/error-alert";
-import { getFilteredEvents } from "@/helper/api-utils";
+import { getAllEvents, getFilteredEvents } from "@/helper/api-utils";
+
+export const dynamic = "force-static";
+
 
 export async function generateMetadata({ params }) {
   const event = (await params).slug

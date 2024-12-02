@@ -6,11 +6,11 @@ import ErrorAlert from "@/components/ui/error-alert";
 import { getAllEvents, getEventById } from "@/helper/api-utils";
 import Comments from "@/components/input/comments";
 
-export const dynamic = "force-static";
+
 export async function generateStaticParams() {
   const posts = await getAllEvents();
   return posts.map((post) => ({
-    params: { eventId: post.id.toString() },
+   eventId: post.id ,
   }));
 }
 

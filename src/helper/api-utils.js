@@ -2,7 +2,7 @@ export async function getAllEvents() {
   const response = await fetch(
     "https://event-page1-default-rtdb.firebaseio.com/events.json",
     {
-      next: { revalidate: 120 },
+      next: { revalidate: 1800 },
     }
   );
   const data = await response.json();
