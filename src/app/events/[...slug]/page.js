@@ -5,11 +5,21 @@ import Button from "@/components/ui/button";
 import ErrorAlert from "@/components/ui/error-alert";
 import { getAllEvents, getFilteredEvents } from "@/helper/api-utils";
 
-export const dynamic = "force-static";
+
+export async function generateStaticParams() {
+  const posts = await getAllEvents();
+  return posts.map((post) => {
+    const event = post.date;
+  
+    return {
+      slug: [event[0], event[1]],
+    };
+  });
+}
 
 
 export async function generateMetadata({ params }) {
-  const event = (await params).slug
+  const event = (await params);
   return {
     title: `Filtered Events`,
     description:`All events for ${event[0]} ${event[1]}`

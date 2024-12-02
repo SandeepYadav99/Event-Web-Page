@@ -6,12 +6,14 @@ import ErrorAlert from "@/components/ui/error-alert";
 import { getAllEvents, getEventById } from "@/helper/api-utils";
 import Comments from "@/components/input/comments";
 
-
 export async function generateStaticParams() {
   const posts = await getAllEvents();
-  return posts.map((post) => ({
-   eventId: post.id ,
-  }));
+  return posts.map((post) => {
+  
+    return {
+      eventId: post.id,
+    };
+  });
 }
 
 const EventDetails = async ({ params }) => {
