@@ -18,14 +18,21 @@ export async function POST(request) {
     const data = await userRegistration.create({ email });
     return NextResponse.json(
       {
+        response_code: 1,
+        response_obj: data,
+        error: false,
+        authorization: true,
         message: "User registration successfully!",
-        data,
       },
       { status: 201 }
     );
   } catch (error) {
     return NextResponse.json(
       {
+        
+        error: true,
+
+
         message: "Something went wrong !",
       },
       { status: 500 }

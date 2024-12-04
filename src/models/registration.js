@@ -7,7 +7,6 @@ const registrationSchema = new mongoose.Schema(
 );
 
 const userRegistration =
-  mongoose.models.userRegistration ||
-  mongoose.model("registration", registrationSchema);
+  mongoose.models.userRegistration || mongoose.model("registration", registrationSchema);
 
 export default userRegistration;

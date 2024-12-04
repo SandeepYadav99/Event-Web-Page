@@ -2,16 +2,18 @@
 import { useRef } from 'react';
 
 import classes from './newsletter-registration.module.css';
+import { useSelector } from 'react-redux';
 
 function NewsletterRegistration() {
   const emailInputRef = useRef();
-
+const notification = useSelector((state)=>state.notification);
+console.log(notification)
   function registrationHandler(event) {
     event.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;
 
-    fetch('/api/newsletter', {
+    fetch('/api/registration', {
       method: 'POST',
       body: JSON.stringify({ email: enteredEmail }),
       headers: {
