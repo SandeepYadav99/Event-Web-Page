@@ -3,9 +3,8 @@ import classes from "./notification.module.css";
 import { hideNotification } from "@/store/notificationSlice";
 import { useEffect } from "react";
 
-function Notification(props) {
+const Notification=({title, message, status })=> {
   const { notifications } = useSelector((state) => state.notification);
-  console.log(notifications);
   const dispatch = useDispatch();
   useEffect(() => {
     let timer;
@@ -21,7 +20,7 @@ function Notification(props) {
       clearTimeout(timer);
     };
   }, [dispatch, notifications]);
-  const { title, message, status } = props;
+  
 
   let statusClasses = "";
 

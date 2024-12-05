@@ -6,8 +6,7 @@ import classes from "./comments.module.css";
 import { showNotification } from "@/store/notificationSlice";
 import { useDispatch } from "react-redux";
 
-function Comments(props) {
-  const { eventId } = props;
+const Comments=({eventId})=> {
   const dispatch = useDispatch();
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState([]);
@@ -25,11 +24,11 @@ function Comments(props) {
     }
   }, [showComments]);
 
-  function toggleCommentsHandler() {
+  const toggleCommentsHandler=()=> {
     setShowComments((prevStatus) => !prevStatus);
   }
 
-  function addCommentHandler(commentData) {
+  const addCommentHandler=(commentData)=> {
     dispatch(
       showNotification({
         title: "Sending comment...",

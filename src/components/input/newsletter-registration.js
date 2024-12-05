@@ -4,11 +4,11 @@ import classes from "./newsletter-registration.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { showNotification } from "@/store/notificationSlice";
 
-function NewsletterRegistration() {
+const NewsletterRegistration=()=> {
   const emailInputRef = useRef();
   const dispatch = useDispatch();
 
-  async function registrationHandler(event) {
+  const  registrationHandler=async(event)=> {
     event.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;

@@ -1,6 +1,6 @@
 import styles from './logistics-item.module.css';
 
-function LogisticsItem({ icon: Icon , children}) {
+const LogisticsItem=({ icon: Icon , children})=> {
   
   return (
     <li className={styles.item}>

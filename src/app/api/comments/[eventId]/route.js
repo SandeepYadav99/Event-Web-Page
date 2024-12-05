@@ -53,7 +53,7 @@ export async function GET(request, { params }) {
 try {
   await connectDB();
   const comment = await userComments.find({eventId});
-  console.log(comment, "Comment")
+  
   return NextResponse.json(
     {
       response_code: 1,
@@ -68,7 +68,6 @@ try {
   return NextResponse.json(
     {
       error: true,
-
       message: "Something went wrong !",
     },
     { status: 500 }

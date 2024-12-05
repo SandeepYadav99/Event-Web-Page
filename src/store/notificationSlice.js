@@ -10,9 +10,7 @@ export const notificationSlice = createSlice({
   initialState: notificationState,
   reducers: {
     showNotification: (state, action) => {
-      
       const { title, message, status } = action.payload;
-      console.log(title, message)
       state.notifications = {
         title: title,
         message: message,

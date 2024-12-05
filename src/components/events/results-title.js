@@ -1,7 +1,7 @@
 import Button from '../ui/button';
 import styles from './results-title.module.css';
 
-function ResultsTitle({date}) {
+const ResultsTitle=({date})=> {
   
 
   const humanReadableDate = new Date(date).toLocaleDateString('en-US', {

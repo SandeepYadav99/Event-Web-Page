@@ -9,7 +9,6 @@ import Comments from "@/components/input/comments";
 export async function generateStaticParams() {
   const posts = await getAllEvents();
   return posts.map((post) => {
-  
     return {
       eventId: post.id,
     };
