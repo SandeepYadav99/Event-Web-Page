@@ -3,9 +3,11 @@ import userRegistration from "@/models/registration";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
+  
   try {
     await connectDB();
     const body = await request.json();
+    
     const { email } = body;
     if (!email) {
       return NextResponse.json(

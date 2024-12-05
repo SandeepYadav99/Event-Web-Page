@@ -2,11 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const notificationState = {
-  notifications: {
-    title: "",
-    message: "",
-    status: "",
-  },
+  notifications: undefined
 };
 
 export const notificationSlice = createSlice({
@@ -14,7 +10,9 @@ export const notificationSlice = createSlice({
   initialState: notificationState,
   reducers: {
     showNotification: (state, action) => {
+      
       const { title, message, status } = action.payload;
+      console.log(title, message)
       state.notifications = {
         title: title,
         message: message,
@@ -22,12 +20,8 @@ export const notificationSlice = createSlice({
       };
     },
     hideNotification: (state, action) => {
-      const { title, message, status } = action.payload;
-      state.notifications = {
-        title: title,
-        message: message,
-        status: status,
-      };
+    
+      state.notifications =null
     },
   },
 });

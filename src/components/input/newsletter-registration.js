@@ -1,27 +1,59 @@
 "use client";
-import { useRef } from 'react';
-
-import classes from './newsletter-registration.module.css';
-import { useSelector } from 'react-redux';
+import { useRef } from "react";
+import classes from "./newsletter-registration.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { showNotification } from "@/store/notificationSlice";
 
 function NewsletterRegistration() {
   const emailInputRef = useRef();
-const notification = useSelector((state)=>state.notification);
-console.log(notification)
-  function registrationHandler(event) {
+  const dispatch = useDispatch();
+
+  async function registrationHandler(event) {
     event.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;
 
-    fetch('/api/registration', {
-      method: 'POST',
-      body: JSON.stringify({ email: enteredEmail }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    dispatch(
+      showNotification({
+        title: "Signing up...",
+        message: "Registration for newsletter.",
+        status: "pending",
+      })
+    );
+
+    try {
+      const response = await fetch("/api/registration", {
+        method: "POST",
+        body: JSON.stringify({ email: enteredEmail }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to register!");
+      }
+
+      const data = await response.json();
+      if (emailInputRef.current) {
+        emailInputRef.current.value = "";
+      }
+      dispatch(
+        showNotification({
+          title: "Success!",
+          message: data.message || "Successfully registered for newsletter!",
+          status: "success",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showNotification({
+          title: "Error",
+          message: error.message || "Something went wrong!",
+          status: "error",
+        })
+      );
+    }
   }
 
   return (
@@ -30,10 +62,10 @@ console.log(notification)
       <form onSubmit={registrationHandler}>
         <div className={classes.control}>
           <input
-            type='email'
-            id='email'
-            placeholder='Your email'
-            aria-label='Your email'
+            type="email"
+            id="email"
+            placeholder="Your email"
+            aria-label="Your email"
             ref={emailInputRef}
           />
           <button>Register</button>
