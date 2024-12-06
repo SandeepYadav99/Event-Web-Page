@@ -24,7 +24,7 @@ export async function POST(request) {
         authorization: true,
         message: "User registration successfully!",
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(

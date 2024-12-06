@@ -33,7 +33,7 @@ export async function POST(request, { params }) {
         authorization: true,
         message: "User comment successfully!",
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(
@@ -62,7 +62,7 @@ try {
       authorization: true,
       message: "User comment successfully!",
     },
-    { status: 201 }
+    { status: 200 }
   );
 } catch (error) {
   return NextResponse.json(

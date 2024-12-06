@@ -1,14 +1,15 @@
 "use client";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import classes from "./newsletter-registration.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { showNotification } from "@/store/notificationSlice";
+import { serviceRegistrationPage } from "@/service/registration.service";
 
-const NewsletterRegistration=()=> {
+const NewsletterRegistration = () => {
   const emailInputRef = useRef();
   const dispatch = useDispatch();
 
-  const  registrationHandler=async(event)=> {
+  const registrationHandler = useCallback(async (event) => {
     event.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;
@@ -20,41 +21,27 @@ const NewsletterRegistration=()=> {
         status: "pending",
       })
     );
-
-    try {
-      const response = await fetch("/api/registration", {
-        method: "POST",
-        body: JSON.stringify({ email: enteredEmail }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to register!");
-      }
-
-      const data = await response.json();
-      if (emailInputRef.current) {
+    serviceRegistrationPage({ email: enteredEmail }).then((res) => {
+      if (!res.error) {
         emailInputRef.current.value = "";
+        dispatch(
+          showNotification({
+            title: "Success!",
+            message: res.message || "Successfully registered for newsletter!",
+            status: "success",
+          })
+        );
+      } else {
+        dispatch(
+          showNotification({
+            title: "Error",
+            message: res.message || "Something went wrong!",
+            status: "error",
+          })
+        );
       }
-      dispatch(
-        showNotification({
-          title: "Success!",
-          message: data.message || "Successfully registered for newsletter!",
-          status: "success",
-        })
-      );
-    } catch (error) {
-      dispatch(
-        showNotification({
-          title: "Error",
-          message: error.message || "Something went wrong!",
-          status: "error",
-        })
-      );
-    }
-  }
+    });
+  }, []);
 
   return (
     <section className={classes.newsletter}>
@@ -73,6 +60,6 @@ const NewsletterRegistration=()=> {
       </form>
     </section>
   );
-}
+};
 
 export default NewsletterRegistration;
