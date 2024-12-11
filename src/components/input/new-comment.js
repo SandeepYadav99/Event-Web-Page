@@ -1,19 +1,13 @@
-import { useRef, useState } from 'react';
+import { useActionState,  useState } from 'react';
 import classes from './new-comment.module.css';
 
 const NewComment=({onAddComment})=> {
   const [isInvalid, setIsInvalid] = useState(false);
 
-  const emailInputRef = useRef();
-  const nameInputRef = useRef();
-  const commentInputRef = useRef();
-
-  const sendCommentHandler=(event)=> {
-    event.preventDefault();
-
-    const enteredEmail = emailInputRef.current.value;
-    const enteredName = nameInputRef.current.value;
-    const enteredComment = commentInputRef.current.value;
+  const sendCommentHandler=(previousState, formData)=> {
+    const enteredEmail = formData.get("email");
+    const enteredName = formData.get("name");
+    const enteredComment = formData.get("comment");
 
     if (
       !enteredEmail ||
@@ -34,22 +28,25 @@ const NewComment=({onAddComment})=> {
       text: enteredComment,
     });
   }
-
+  const [error, submitAction, isPending] = useActionState(
+    sendCommentHandler,
+    null
+  );
   return (
-    <form className={classes.form} onSubmit={sendCommentHandler}>
+    <form className={classes.form} action={submitAction}>
       <div className={classes.row}>
         <div className={classes.control}>
           <label htmlFor='email'>Your email</label>
-          <input type='email' id='email' ref={emailInputRef} />
+          <input type='email' id='email' name='email' />
         </div>
         <div className={classes.control}>
           <label htmlFor='name'>Your name</label>
-          <input type='text' id='name' ref={nameInputRef} />
+          <input type='text' id='name' name='name' />
         </div>
       </div>
       <div className={classes.control}>
         <label htmlFor='comment'>Your comment</label>
-        <textarea id='comment' rows='5' ref={commentInputRef}></textarea>
+        <textarea id='comment' rows='5' name='comment'></textarea>
       </div>
       {isInvalid && <p>Please enter a valid email address and comment!</p>}
       <button className={classes.btn}>Submit</button>

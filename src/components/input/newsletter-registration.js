@@ -1,18 +1,15 @@
 "use client";
-import { useCallback, useRef } from "react";
+import { useActionState } from "react";
 import classes from "./newsletter-registration.module.css";
 import { useDispatch } from "react-redux";
 import { showNotification } from "@/store/notificationSlice";
 import { serviceRegistrationPage } from "@/service/registration.service";
 
 const NewsletterRegistration = () => {
-  const emailInputRef = useRef();
   const dispatch = useDispatch();
-
-  const registrationHandler = useCallback(async (event) => {
-    event.preventDefault();
-
-    const enteredEmail = emailInputRef.current.value;
+  // Teting for ReactJS 19 Updated verson Action Feature
+  const registrationHandler = async (previousState, formData) => {
+    const enteredEmail = formData.get("email");
 
     dispatch(
       showNotification({
@@ -23,7 +20,6 @@ const NewsletterRegistration = () => {
     );
     serviceRegistrationPage({ email: enteredEmail }).then((res) => {
       if (!res.error) {
-        emailInputRef.current.value = "";
         dispatch(
           showNotification({
             title: "Success!",
@@ -41,19 +37,24 @@ const NewsletterRegistration = () => {
         );
       }
     });
-  }, []);
+  };
+  const [error, submitAction, isPending] = useActionState(
+    registrationHandler,
+    null
+  );
 
   return (
     <section className={classes.newsletter}>
       <h2>Sign up to stay updated!</h2>
-      <form onSubmit={registrationHandler}>
+      <form action={submitAction}>
         <div className={classes.control}>
           <input
             type="email"
             id="email"
+            name="email"
             placeholder="Your email"
             aria-label="Your email"
-            ref={emailInputRef}
+            // ref={emailInputRef}
           />
           <button>Register</button>
         </div>
