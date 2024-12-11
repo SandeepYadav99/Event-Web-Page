@@ -13,8 +13,8 @@
     "axios": "^1.7.9",
     "mongoose": "^8.8.2",
     "next": "15.0.3",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-redux": "^9.1.2"
   },
   "devDependencies": {
