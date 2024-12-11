@@ -1,11 +1,11 @@
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import styles from "./event-item.module.css";
 import Button from "../ui/button";
 import DateIcon from "../icons/date-icon";
 import AddressIcon from "../icons/address-icon";
 import ArrowRightIcon from "../icons/arrow-right-icon";
+
 const EventItemList = ({ items }) => {
   const { image, title, date, location, id } = items;
 
